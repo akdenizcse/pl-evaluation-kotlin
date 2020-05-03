@@ -233,6 +233,55 @@ startActivity(intent)
 }
 ```
 
+> Reified Types
+
+```
+inline fun <reified T : Activity> Context.open() = startActivity(Intent(this, T::class.java))
+inline fun <reified T : Activity> Context.openForResult(code: Int) = startActivityForResult(Intent(this, T::class.java), code)
+inline fun <reified T : Fragment> newInstance(): T = T::class.java.newInstance()
+
+Usage: 
+
+open<LoginActivity>()
+
+openForResult<LoginActivity>(INTENT_CODE)
+
+supportFragmentManager
+    .beginTransaction()
+    .replace(R.id.login_fragment_container, newInstance<LoginFragment>())
+    .commit()
+```
+
+> Apply Function
+```
+val zaphod = Person().apply {
+  firstName = "Zaphod"
+  lastName = "Beeblebrox"
+  headCount = 2
+}
+```
+
+> Single Expression Function
+```
+fun fullName() = firstName + " " + lastName
+```
+
+> Higher Order Function
+```
+	// lambda expression 
+var lambda = {a: Int , b: Int -> a + b } 
+	// higher order function 
+fun higherfunc( lmbd: (Int, Int) -> Int) {	 // accepting lambda as parameter 
+		
+	var result = lmbd(2,4) // invokes the lambda expression by passing parameters					 
+	println("The sum of two numbers is: $result") 
+} 
+
+fun main(args: Array<String>) { 
+	higherfunc(lambda)		 //passing lambda as parameter 
+}
+```
+
  -------------------------------------------------------------------------------------------------
 
 ## 6)   Things Those Are Specific to This Language
